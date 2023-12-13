@@ -1,0 +1,95 @@
+---
+- name: "FIXME_HOSTNAME"
+  node_name: "FIXME_NODE_NAME"
+  resource_name: "vm-FIXME_HOSTNAME"
+  vm_id: 1000
+  agent:
+    enabled: true
+    trim: true
+    type: "virtio"
+  bios: "ovmf"
+  clone:
+    node_name: "FIXME_NODE_NAME"
+    vm_id: 9000
+    full: true
+  cpu:
+    cores: 2
+    sockets: 1
+    type: "host"
+  description: "FIXME_DESCRIPTION"
+  disks:
+    - disk1:
+        interface: "scsi0"
+        datastore_id: "FIXME_DATASORE"
+        size: 20
+        file_format: "raw"
+        cache: "none"
+        ssd: true
+        discard: "on"
+    - disk2:
+        interface: "scsi1"
+        datastore_id: "FIXME_DATASORE"
+        size: 20
+        file_format: "raw"
+        cache: "none"
+        ssd: true
+        discard: "on"
+  efi_disk:
+    datastore_id: "FIXME_DATASORE"
+    file_format: "raw"
+    type: "4m"
+    pre_enrolled_keys: true
+  cloud_init:
+    type: "nocloud"
+    datastore_id: "FIXME_DATASORE"
+    dns:
+      domain: "example.lan"
+      server: "1.1.1.1 1.0.0.1"
+    ip_configs:
+      - ipv4:
+          address: "A.B.C.D/24"
+          gateway: "A.B.C.1"
+      - ipv4:
+          address: "A.B.C.D/24"
+          gateway: "A.B.C.1"
+    user_account:
+      username: "FIXME_USERNAME"
+      password: "FIXME_PASSWORD"
+      keys:
+       - FIXME_SSH_PUBKEY
+  keyboard_layout: "en-us"
+  machine: "q35"
+  memory:
+    dedicated: 2048
+  network_devices:
+    - net1:
+        enabled: true
+        bridge: "vmbr0"
+        model: "virtio"
+        firewall: false
+        vlan_id: 1
+    - net2:
+        enabled: true
+        bridge: "vmbr0"
+        model: "virtio"
+        firewall: false
+        vlan_id: 2
+  on_boot: true
+  reboot: false
+  scsi_hardware: "virtio-scsi-pci"
+  serial_devices:
+    - dev1:
+        device: "socket"
+  started: true
+  tags:
+    - FIXME_TIER_LEVEL
+    - FIXME_OS_OR_DISTRIBUTION
+    - FIXME_ENV
+    - FIXME_ROLE
+  template: false
+  tpm_state:
+    datastore_id: "FIXME_DATASORE"
+    version: "v2.0"
+  vga:
+    enabled: true
+    type: "serial0"
