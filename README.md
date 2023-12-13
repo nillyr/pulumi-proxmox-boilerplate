@@ -74,7 +74,7 @@ declare -A template1=(
 	[SSHKeyFile]="${SSH_KEY_FILE}"
 )
 
-specs=("${!template1@}")
+specs=("${!template@}")
 declare -n specs_ref
 
 mkdir -p "${WORKSPACE}"
