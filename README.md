@@ -35,8 +35,6 @@ pveum user token add <username> <token name> -expire 0 -privsep 0 -comment "<com
 In order to clone, you need to create a template. The following script can be used to create a Ubuntu GNU/Linux template:
 
 ```bash
-mkdir -p /root/cloudinit-images/
-cat <<EOF > /root/cloudinit-templates/ubuntu_templates.sh
 #!/bin/bash
 
 WORKSPACE="/root/cloudinit-images/"
@@ -57,11 +55,11 @@ readonly USERNAME
 PASSWORD="FIXME"
 readonly PASSWORD
 
-SSH_KEY="FIXME_SSH_PUBKEY"
-readonly SSH_KEY
+SSH_PUB_KEY="FIXME"
+readonly SSH_PUB_KEY
 
-SSH_KEY_FILE="${WORKSPACE}FIXME.pub"
-readonly SSH_KEY_FILE
+SSH_PUB_KEY_FILE="${WORKSPACE}FIXME.pub"
+readonly SSH_PUB_KEY_FILE
 
 declare -A template1=(
 	[ID]=9000
@@ -71,7 +69,7 @@ declare -A template1=(
 	[Disk]=20
 	[User]="${USERNAME}"
 	[Password]="${PASSWORD}"
-	[SSHKeyFile]="${SSH_KEY_FILE}"
+	[SSHKeyFile]="${SSH_PUB_KEY_FILE}"
 )
 
 specs=("${!template@}")
@@ -80,7 +78,7 @@ declare -n specs_ref
 mkdir -p "${WORKSPACE}"
 cd "${WORKSPACE}"
 
-echo "${SSH_KEY}" >| "${SSH_KEY_FILE}"
+echo "${SSH_PUB_KEY}" >| "${SSH_PUB_KEY_FILE}"
 
 if ! test -f "${QCOW2_FILENAME}"; then
 	wget -O "${QCOW2_FILENAME}" "${URL}"
@@ -115,15 +113,11 @@ for specs_ref in "${specs[@]}"; do
 	qm template "${specs_ref[ID]}"
 done
 
-rm "${SSH_KEY_FILE}"
+rm "${SSH_PUB_KEY_FILE}"
 
 cd -
 
 exit 0
-EOF
-
-chmod +x /root/cloudinit-templates/ubuntu_templates.sh
-./root/cloudinit-templates/ubuntu_templates.sh
 ```
 
 ### Pulumi project
