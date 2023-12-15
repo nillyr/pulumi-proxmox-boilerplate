@@ -1,0 +1,5 @@
+name: ${PROJECT}
+description: ${DESCRIPTION}
+runtime: python
+template:
+  description: A Python Pulumi program for deployment of Virtual Machines on Proxmox VE.
