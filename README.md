@@ -122,21 +122,14 @@ exit 0
 
 ### Pulumi project
 
-1. You need to edit the `.env` file with your information.
-2. You need to edit the vms template to match your needs.
+```bash
+pulumi new git@github.com:nillyr/pulumi-proxmox-boilerplate.git
+```
 
-Then, run the following commands:
+1. You need to edit the `.env` file with your information.
+2. You need to edit the vms yaml files to match your needs.
 
 ```bash
-# Store your stack's state where you want (use --local or any other object storage backends (s3://, gs://, azblob://)) (default: Pulumi Cloud backend)
-pulumi login
-# Create a project and and a new stack
-pulumi new python --name <project name> --stack <stack name> --description "<description>" --force
-# Or add a stack in your project
-pulumi stack init <stack name>
-# Replace the generated __main__.py file and add the vms folder
-# Replace the generated requirements.txt file
-pip install -r requirements.txt
 source .env
 pulumi preview
 pulumi up
