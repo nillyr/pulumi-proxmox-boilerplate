@@ -20,6 +20,14 @@ def create_sequence_from_list_of_dict(cls_name, objects_list):
     sequence = list()
     for objects in objects_list:
         for obj in objects:
+            if (
+                cls_name.__name__ == "VirtualMachineDiskArgs"
+                and "speed" in objects[obj]
+            ):
+                objects[obj]["speed"] = proxmox.vm.VirtualMachineDiskSpeedArgs(
+                    **objects[obj]["speed"]
+                )
+
             sequence.append(cls_name(**objects[obj]))
 
     return sequence
@@ -29,7 +37,7 @@ def create_vms_from_list(vms_list: list):
     """
     See documentation:
         * https://github.com/muhlba91/pulumi-proxmoxve/blob/main/sdk/python/pulumi_proxmoxve/vm/_inputs.py
-        * https://github.com/muhlba91/pulumi-proxmoxve/blob/main/sdk/python/pulumi_proxmoxve/vm/virtual_machine.py#L1663
+        * https://github.com/muhlba91/pulumi-proxmoxve/blob/main/sdk/python/pulumi_proxmoxve/vm/virtual_machine.py
         * https://registry.terraform.io/providers/bpg/proxmox/latest/docs/resources/virtual_environment_vm
     """
     for vms in vms_list:
@@ -43,6 +51,11 @@ def create_vms_from_list(vms_list: list):
                     type=vm["agent"]["type"],
                 ),
                 bios=vm["bios"],
+                cdrom=proxmox.vm.VirtualMachineCdromArgs(
+                    enabled=vm["cdrom"]["enabled"],
+                    file_id=vm["cdrom"]["file_id"],
+                    interface=vm["cdrom"]["interface"],
+                ),
                 clone=proxmox.vm.VirtualMachineCloneArgs(
                     node_name=vm["clone"]["node_name"],
                     vm_id=vm["clone"]["vm_id"],
@@ -57,7 +70,6 @@ def create_vms_from_list(vms_list: list):
                 disks=create_sequence_from_list_of_dict(
                     proxmox.vm.VirtualMachineDiskArgs, vm["disks"]
                 ),
-                # when efi_disk is not commented: error: 1 error occurred: resizing of efidisks is not supported.
                 # efi_disk = proxmox.vm.VirtualMachineEfiDiskArgs(
                 #     datastore_id = vm["efi_disk"]["datastore_id"],
                 #     file_format = vm["efi_disk"]["file_format"],

@@ -8,6 +8,10 @@
     trim: true
     type: "virtio"
   bios: "ovmf"
+  cdrom:
+    enabled: false
+    file_id: ""
+    interface: "ide3"
   clone:
     node_name: "FIXME_NODE_NAME"
     vm_id: 9000
@@ -26,6 +30,11 @@
         cache: "none"
         ssd: true
         discard: "on"
+        speed:
+          read: 0
+          read_burstable: 0
+          write: 0
+          write_burstable: 0
     - disk2:
         interface: "scsi1"
         datastore_id: "FIXME_DATASORE"
@@ -34,6 +43,11 @@
         cache: "none"
         ssd: true
         discard: "on"
+        speed:
+          read: 0
+          read_burstable: 0
+          write: 0
+          write_burstable: 0
   efi_disk:
     datastore_id: "FIXME_DATASORE"
     file_format: "raw"
@@ -56,7 +70,7 @@
       username: "FIXME_USERNAME"
       password: "FIXME_PASSWORD"
       keys:
-       - FIXME_SSH_PUBKEY
+       - FIXME_SSH_PUB_KEY
   keyboard_layout: "en-us"
   machine: "q35"
   memory:
@@ -82,10 +96,7 @@
         device: "socket"
   started: true
   tags:
-    - FIXME_TIER_LEVEL
-    - FIXME_OS_OR_DISTRIBUTION
-    - FIXME_ENV
-    - FIXME_ROLE
+    - FIXME_LOWERCASE_NO_SPACE
   template: false
   tpm_state:
     datastore_id: "FIXME_DATASORE"
